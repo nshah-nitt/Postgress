@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from 'pg'
 import dotenv from 'dotenv'
+import newrelic from 'newrelic'
 
 dotenv.config()
 const app = express();
@@ -33,13 +34,6 @@ app.get("/", async (req, res) => {
 
 app.post("/add",async (req,res)=>{
   const input = req.body['country']
-  // const query1 = await db.query("SELECT country_code from countries where country_name = ($1)",[input])
-  // console.log(query1.rows)
-  // if(query1.rows.length !== 0){
-  //   let code = query1.rows[0].country_code
-  //   await db.query("INSERT INTO visited_country (country_code) VALUES ($1)",[code])
-  // }
-  // res.redirect("/")
   try {
     const query1 = await db.query("SELECT country_code from countries where country_name = $1",[input])
     let code = query1.rows[0].country_code
